@@ -1,6 +1,7 @@
+// next.config.mjs (or next.config.js with module.exports)
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-};
+  allowedDevOrigins: ['192.168.1.47'],
+}
 
-export default nextConfig;
+export default nextConfig

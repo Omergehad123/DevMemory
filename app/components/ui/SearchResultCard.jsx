@@ -26,12 +26,22 @@ export default function SearchResultCard({
   let catName = null
 
   if (isCategory) {
-    href = `/references/${itemId}`
+    const catSlug = item.slug || itemId
+    href = `/references/${catSlug}`
   } else {
-    const catId = item.categoryId?._id || item.categoryId?.id || item.categoryId
-    catName = item.categoryId?.name
-    href = `/references/${catId}?ref=${itemId}`
+    const rawCat = item.categoryId
+    const catSlug =
+      typeof rawCat === 'object' && rawCat !== null
+        ? rawCat.slug || rawCat._id || rawCat.id || 'general'
+        : rawCat || 'general'
+    const refSlug = item.slug || itemId
+    catName =
+      typeof rawCat === 'object' && rawCat !== null
+        ? rawCat.name
+        : null
+    href = `/references/${catSlug}/${refSlug}`
   }
+
 
   const title = isCategory ? item.name : item.title
   const description = item.description

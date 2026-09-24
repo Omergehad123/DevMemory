@@ -21,6 +21,7 @@ export default function ReferenceViewer({
   activeReference,
   categoryName,
   categoryStack,
+  categorySlug,
   activeContentTab,
   setActiveContentTab,
   prevRef,
@@ -59,6 +60,8 @@ export default function ReferenceViewer({
 
   const activeRefKey = activeReference._id || activeReference.id
 
+  const categoryHref = categorySlug ? `/references/${categorySlug}` : '/references'
+
   return (
     <div className='flex flex-col gap-8 w-full animate-in fade-in duration-300 text-left'>
       {/* Breadcrumb and Category Meta */}
@@ -71,8 +74,15 @@ export default function ReferenceViewer({
             References
           </Link>
           <span>/</span>
-          <span className='text-(--secondColor) font-semibold'>
+          <Link
+            href={categoryHref}
+            className='text-(--secondColor) font-semibold hover:underline transition-all'
+          >
             {categoryName}
+          </Link>
+          <span>/</span>
+          <span className='text-gray-200 font-medium truncate max-w-[200px] sm:max-w-xs'>
+            {activeReference.title}
           </span>
         </div>
 
@@ -183,41 +193,76 @@ export default function ReferenceViewer({
       {/* Bottom Navigation: Previous / Next Reference */}
       <div className='w-full max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10 mt-6'>
         {prevRef ? (
-          <button
-            onClick={() => onNavigateRef(prevRef._id || prevRef.id)}
-            className='flex items-center gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 cursor-pointer w-full sm:w-auto text-left group'
-          >
-            <LuChevronLeft className='w-5 h-5 shrink-0 group-hover:-translate-x-1 transition-transform' />
-            <div className='flex flex-col'>
-              <span className='text-[10px] uppercase font-mono tracking-wider opacity-70'>
-                Previous Topic
-              </span>
-              <span className='text-xs sm:text-sm font-bold truncate max-w-[200px]'>
-                {prevRef.title}
-              </span>
-            </div>
-          </button>
+          categorySlug ? (
+            <Link
+              href={`/references/${categorySlug}/${prevRef.slug || prevRef._id || prevRef.id}`}
+              className='flex items-center gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 w-full sm:w-auto text-left group'
+            >
+              <LuChevronLeft className='w-5 h-5 shrink-0 group-hover:-translate-x-1 transition-transform' />
+              <div className='flex flex-col'>
+                <span className='text-[10px] uppercase font-mono tracking-wider opacity-70'>
+                  Previous Topic
+                </span>
+                <span className='text-xs sm:text-sm font-bold truncate max-w-[200px]'>
+                  {prevRef.title}
+                </span>
+              </div>
+            </Link>
+          ) : (
+            <button
+              onClick={() => onNavigateRef && onNavigateRef(prevRef._id || prevRef.id)}
+              className='flex items-center gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 cursor-pointer w-full sm:w-auto text-left group'
+            >
+              <LuChevronLeft className='w-5 h-5 shrink-0 group-hover:-translate-x-1 transition-transform' />
+              <div className='flex flex-col'>
+                <span className='text-[10px] uppercase font-mono tracking-wider opacity-70'>
+                  Previous Topic
+                </span>
+                <span className='text-xs sm:text-sm font-bold truncate max-w-[200px]'>
+                  {prevRef.title}
+                </span>
+              </div>
+            </button>
+          )
         ) : (
           <div className='hidden sm:block' />
         )}
 
         {nextRef && (
-          <button
-            onClick={() => onNavigateRef(nextRef._id || nextRef.id)}
-            className='flex items-center justify-end gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 cursor-pointer w-full sm:w-auto text-right group ml-auto'
-          >
-            <div className='flex flex-col items-end'>
-              <span className='text-[10px] uppercase font-mono tracking-wider opacity-70'>
-                Next Topic
-              </span>
-              <span className='text-xs sm:text-sm font-bold truncate max-w-[200px]'>
-                {nextRef.title}
-              </span>
-            </div>
-            <LuChevronRight className='w-5 h-5 shrink-0 group-hover:translate-x-1 transition-transform' />
-          </button>
+          categorySlug ? (
+            <Link
+              href={`/references/${categorySlug}/${nextRef.slug || nextRef._id || nextRef.id}`}
+              className='flex items-center justify-end gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 w-full sm:w-auto text-right group ml-auto'
+            >
+              <div className='flex flex-col items-end'>
+                <span className='text-[10px] uppercase font-mono tracking-wider opacity-70'>
+                  Next Topic
+                </span>
+                <span className='text-xs sm:text-sm font-bold truncate max-w-[200px]'>
+                  {nextRef.title}
+                </span>
+              </div>
+              <LuChevronRight className='w-5 h-5 shrink-0 group-hover:translate-x-1 transition-transform' />
+            </Link>
+          ) : (
+            <button
+              onClick={() => onNavigateRef && onNavigateRef(nextRef._id || nextRef.id)}
+              className='flex items-center justify-end gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 cursor-pointer w-full sm:w-auto text-right group ml-auto'
+            >
+              <div className='flex flex-col items-end'>
+                <span className='text-[10px] uppercase font-mono tracking-wider opacity-70'>
+                  Next Topic
+                </span>
+                <span className='text-xs sm:text-sm font-bold truncate max-w-[200px]'>
+                  {nextRef.title}
+                </span>
+              </div>
+              <LuChevronRight className='w-5 h-5 shrink-0 group-hover:translate-x-1 transition-transform' />
+            </button>
+          )
         )}
       </div>
     </div>
   )
 }
+

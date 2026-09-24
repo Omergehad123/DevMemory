@@ -16,6 +16,7 @@ import {
 export default function ReferenceSidebar({
   categoryName,
   categoryStack,
+  categorySlug,
   references = [],
   filteredReferences = [],
   selectedRefId,
@@ -51,9 +52,9 @@ export default function ReferenceSidebar({
           {!sidebarCollapsed ? (
             <div className='flex items-center gap-2.5 truncate flex-1'>
               <Link
-                href='/references'
+                href={categorySlug ? `/references/${categorySlug}` : '/references'}
                 className='p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors shrink-0'
-                title='Back to Categories'
+                title='Back to Category Hub'
               >
                 <IoChevronBack className='text-sm' />
               </Link>
@@ -74,9 +75,9 @@ export default function ReferenceSidebar({
           ) : (
             <div className='w-full flex justify-center'>
               <Link
-                href='/references'
+                href={categorySlug ? `/references/${categorySlug}` : '/references'}
                 className='p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors'
-                title='Back to Categories'
+                title='Back to Category Hub'
               >
                 <IoChevronBack className='text-base' />
               </Link>
@@ -133,23 +134,28 @@ export default function ReferenceSidebar({
           {filteredReferences.length > 0 ? (
             filteredReferences.map((ref, idx) => {
               const refId = ref._id || ref.id
-              const isActive = selectedRefId === refId
+              const refSlug = ref.slug || refId
+              const isActive =
+                selectedRefId === refId ||
+                selectedRefId === ref.slug ||
+                selectedRefId === refSlug
 
-              return (
-                <button
-                  key={refId}
-                  onClick={() => onSelectRef(refId)}
-                  title={sidebarCollapsed ? ref.title : undefined}
-                  className={`
-                    w-full text-left rounded-xl transition-all duration-200 cursor-pointer group flex items-center
-                    ${sidebarCollapsed ? 'justify-center p-2.5' : 'px-3.5 py-2.5'}
-                    ${
-                      isActive
-                        ? 'bg-(--mainColor) text-slate-950 font-bold shadow-md shadow-white/10'
-                        : 'text-gray-300 hover:bg-(--mainColor) hover:text-slate-950 font-medium'
-                    }
-                  `}
-                >
+              const itemHref = categorySlug
+                ? `/references/${categorySlug}/${refSlug}`
+                : '#'
+
+              const itemClass = `
+                w-full text-left rounded-xl transition-all duration-200 group flex items-center
+                ${sidebarCollapsed ? 'justify-center p-2.5' : 'px-3.5 py-2.5'}
+                ${
+                  isActive
+                    ? 'bg-(--mainColor) text-slate-950 font-bold shadow-md shadow-white/10'
+                    : 'text-gray-300 hover:bg-(--mainColor) hover:text-slate-950 font-medium'
+                }
+              `
+
+              const innerContent = (
+                <>
                   {sidebarCollapsed ? (
                     <span
                       className={`
@@ -182,6 +188,34 @@ export default function ReferenceSidebar({
                       </span>
                     </div>
                   )}
+                </>
+              )
+
+              if (categorySlug) {
+                return (
+                  <Link
+                    key={refId}
+                    href={itemHref}
+                    onClick={() => {
+                      if (onSelectRef) onSelectRef(refId)
+                      setMobileSidebarOpen(false)
+                    }}
+                    title={sidebarCollapsed ? ref.title : undefined}
+                    className={itemClass}
+                  >
+                    {innerContent}
+                  </Link>
+                )
+              }
+
+              return (
+                <button
+                  key={refId}
+                  onClick={() => onSelectRef && onSelectRef(refId)}
+                  title={sidebarCollapsed ? ref.title : undefined}
+                  className={itemClass}
+                >
+                  {innerContent}
                 </button>
               )
             })
@@ -191,6 +225,7 @@ export default function ReferenceSidebar({
             </div>
           )}
         </div>
+
 
         {/* Sidebar Footer */}
         {!sidebarCollapsed && (

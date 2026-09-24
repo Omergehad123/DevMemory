@@ -113,10 +113,26 @@ export default function LatestReferences() {
               >
                 {references.map((ref) => {
                   const refId = ref._id || ref.id
-                  const catId = ref.categoryId?._id || ref.categoryId?.id || ref.categoryId
-                  const catName = ref.categoryId?.name || 'Reference'
-                  const catStack = ref.categoryId?.stack || ''
-                  const catImage = ref.categoryId?.image || null
+                  const rawCat = ref.categoryId
+                  const catSlug =
+                    typeof rawCat === 'object' && rawCat !== null
+                      ? rawCat.slug || rawCat._id || rawCat.id || 'general'
+                      : rawCat || 'general'
+                  const refSlug = ref.slug || refId
+                  const catName =
+                    typeof rawCat === 'object' && rawCat !== null
+                      ? rawCat.name || 'Reference'
+                      : 'Reference'
+                  const catStack =
+                    typeof rawCat === 'object' && rawCat !== null
+                      ? rawCat.stack || ''
+                      : ''
+                  const catImage =
+                    typeof rawCat === 'object' && rawCat !== null
+                      ? rawCat.image || null
+                      : null
+
+                  const targetUrl = `/references/${catSlug}/${refSlug}`
 
                   return (
                     <motion.div
@@ -146,14 +162,19 @@ export default function LatestReferences() {
 
                       {/* Category name pill */}
                       <div className='mb-2'>
-                        <span className='inline-block text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-(--hoverColor)/15 text-(--hoverColor) border border-(--hoverColor)/30 uppercase tracking-wider'>
+                        <Link
+                          href={`/references/${catSlug}`}
+                          className='inline-block text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-(--hoverColor)/15 text-(--hoverColor) hover:bg-(--hoverColor)/25 border border-(--hoverColor)/30 uppercase tracking-wider transition-colors'
+                        >
                           {catName}
-                        </span>
+                        </Link>
                       </div>
 
                       {/* Title */}
                       <h3 className='text-lg sm:text-xl font-bold text-white tracking-tight mb-2 group-hover:text-(--hoverColor) transition-colors duration-200 line-clamp-2 flex-1'>
-                        {ref.title}
+                        <Link href={targetUrl} className='hover:underline'>
+                          {ref.title}
+                        </Link>
                       </h3>
 
                       {/* Description */}
@@ -172,16 +193,17 @@ export default function LatestReferences() {
                           </div>
                         )}
                         <Link
-                          href={`/references/${catId}`}
+                          href={targetUrl}
                           className='inline-flex items-center gap-1.5 text-gray-300 group-hover:text-(--secondColor) font-mono text-xs font-semibold transition-colors duration-200 ml-auto'
                         >
-                          <span>View</span>
+                          <span>View Reference</span>
                           <HiArrowRight className='w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1' />
                         </Link>
                       </div>
                     </motion.div>
                   )
                 })}
+
               </motion.div>
             ) : (
               /* Animated SoonPlaceholder State */

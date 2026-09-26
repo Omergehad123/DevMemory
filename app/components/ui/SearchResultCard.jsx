@@ -9,6 +9,7 @@ import {
 } from 'react-icons/io5'
 import { HiArrowRight } from 'react-icons/hi2'
 import HighlightMatch from './HighlightMatch'
+import { slugify } from '@/lib/utils/slugify'
 
 export default function SearchResultCard({
   type = 'category',
@@ -26,15 +27,15 @@ export default function SearchResultCard({
   let catName = null
 
   if (isCategory) {
-    const catSlug = item.slug || itemId
+    const catSlug = item.slug || slugify(item.name) || itemId
     href = `/references/${catSlug}`
   } else {
     const rawCat = item.categoryId
     const catSlug =
       typeof rawCat === 'object' && rawCat !== null
-        ? rawCat.slug || rawCat._id || rawCat.id || 'general'
+        ? rawCat.slug || slugify(rawCat.name) || rawCat._id || rawCat.id || 'general'
         : rawCat || 'general'
-    const refSlug = item.slug || itemId
+    const refSlug = item.slug || slugify(item.title) || itemId
     catName =
       typeof rawCat === 'object' && rawCat !== null
         ? rawCat.name

@@ -12,6 +12,7 @@ import {
   LuPanelLeftClose,
   LuPanelLeftOpen
 } from 'react-icons/lu'
+import { slugify } from '@/lib/utils/slugify'
 
 export default function ReferenceSidebar({
   categoryName,
@@ -134,11 +135,12 @@ export default function ReferenceSidebar({
           {filteredReferences.length > 0 ? (
             filteredReferences.map((ref, idx) => {
               const refId = ref._id || ref.id
-              const refSlug = ref.slug || refId
+              const refSlug = ref.slug || slugify(ref.title) || refId
               const isActive =
                 selectedRefId === refId ||
                 selectedRefId === ref.slug ||
-                selectedRefId === refSlug
+                selectedRefId === refSlug ||
+                (ref.title && selectedRefId === slugify(ref.title))
 
               const itemHref = categorySlug
                 ? `/references/${categorySlug}/${refSlug}`

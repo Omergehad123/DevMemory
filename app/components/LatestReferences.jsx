@@ -8,6 +8,7 @@ import { IoCodeSlashOutline, IoCalendarOutline } from 'react-icons/io5'
 import { fetchReferences } from '@/lib/api/references.api'
 import { formatDate } from '@/lib/utils/format'
 import SoonPlaceholder from './ui/SoonPlaceholder'
+import { slugify } from '@/lib/utils/slugify'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -116,9 +117,9 @@ export default function LatestReferences() {
                   const rawCat = ref.categoryId
                   const catSlug =
                     typeof rawCat === 'object' && rawCat !== null
-                      ? rawCat.slug || rawCat._id || rawCat.id || 'general'
+                      ? rawCat.slug || slugify(rawCat.name) || rawCat._id || rawCat.id || 'general'
                       : rawCat || 'general'
-                  const refSlug = ref.slug || refId
+                  const refSlug = ref.slug || slugify(ref.title) || refId
                   const catName =
                     typeof rawCat === 'object' && rawCat !== null
                       ? rawCat.name || 'Reference'

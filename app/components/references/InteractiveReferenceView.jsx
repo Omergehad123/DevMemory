@@ -6,6 +6,7 @@ import { IoArrowBack, IoMenu } from 'react-icons/io5'
 import ReferenceSidebar from './ReferenceSidebar'
 import ReferenceViewer from './ReferenceViewer'
 import { hasValidContent } from './DocumentRenderer'
+import { slugify } from '@/lib/utils/slugify'
 
 function getDefaultTabForRef(ref) {
   if (!ref) return 'why'
@@ -30,7 +31,7 @@ export default function InteractiveReferenceView({
 
   const categoryName = category?.name || activeReference?.categoryId?.name || 'Category'
   const categoryStack = category?.stack || activeReference?.categoryId?.stack || 'General'
-  const catSlug = category?.slug || categorySlug
+  const catSlug = category?.slug || slugify(categoryName) || categorySlug
 
   // Filter references by search inside sidebar
   const filteredReferences = useMemo(() => {
@@ -45,11 +46,13 @@ export default function InteractiveReferenceView({
   // Current index for next/prev calculations
   const currentIndex = useMemo(() => {
     if (!activeReference) return -1
-    return references.findIndex(
-      (r) =>
-        (r._id && r._id === (activeReference._id || activeReference.id)) ||
-        (r.slug && r.slug === activeReference.slug)
-    )
+    const activeRefSlug = activeReference.slug || slugify(activeReference.title)
+    const activeRefId = activeReference._id || activeReference.id
+    return references.findIndex((r) => {
+      const rSlug = r.slug || slugify(r.title)
+      const rId = r._id || r.id
+      return (rId && rId === activeRefId) || (rSlug && rSlug === activeRefSlug)
+    })
   }, [references, activeReference])
 
   const prevRef = currentIndex > 0 ? references[currentIndex - 1] : null
@@ -58,7 +61,11 @@ export default function InteractiveReferenceView({
       ? references[currentIndex + 1]
       : null
 
-  const selectedRefId = activeReference?._id || activeReference?.id || activeReference?.slug
+  const selectedRefId =
+    activeReference?.slug ||
+    slugify(activeReference?.title) ||
+    activeReference?._id ||
+    activeReference?.id
 
   return (
     <div className='w-full min-h-[calc(100vh-80px)] bg-(--bgColor) text-gray-100 flex flex-col'>

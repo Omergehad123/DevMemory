@@ -13,6 +13,7 @@ import {
 import { HiArrowRight, HiOutlineBookOpen } from 'react-icons/hi2'
 import { fetchCategories } from '@/lib/api/categories.api'
 import SoonPlaceholder from '@/app/components/ui/SoonPlaceholder'
+import { slugify } from '@/lib/utils/slugify'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -196,7 +197,7 @@ export default function ReferencesExplorer({ initialCategories = [] }) {
             className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'
           >
             {filteredCategories.map((category) => {
-              const catSlug = category.slug || category._id || category.id
+              const catSlug = category.slug || slugify(category.name) || category._id || category.id
               const refCount = Array.isArray(category.references)
                 ? category.references.length
                 : 0

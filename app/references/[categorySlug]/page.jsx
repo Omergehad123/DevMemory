@@ -14,6 +14,7 @@ import { fetchCategoryBySlug } from '@/lib/api/categories.api'
 import { fetchReferences } from '@/lib/api/references.api'
 import { SITE_URL } from '@/lib/api/config'
 import { formatDate } from '@/lib/utils/format'
+import { slugify } from '@/lib/utils/slugify'
 
 export async function generateMetadata({ params }) {
   const { categorySlug } = await params
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }) {
     category.seoDescription ||
     category.description ||
     `Explore comprehensive ${catName} programming references, syntax notes, best practices, and code examples on DevMemory.`
-  const canonicalPath = `/references/${category.slug || categorySlug}`
+  const canonicalPath = `/references/${category.slug || slugify(category.name) || categorySlug}`
   const canonicalUrl = `${SITE_URL}${canonicalPath}`
 
   return {
@@ -66,7 +67,7 @@ export default async function CategoryPage({ params }) {
   }
 
   const catId = category._id || category.id
-  const catSlug = category.slug || categorySlug
+  const catSlug = category.slug || slugify(category.name) || categorySlug
   const catName = category.name || 'Category'
   const catDescription = category.description || ''
   const catStack = category.stack || 'General'
@@ -209,7 +210,7 @@ export default async function CategoryPage({ params }) {
           {references.length > 0 ? (
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
               {references.map((ref, idx) => {
-                const refSlug = ref.slug || ref._id || ref.id
+                const refSlug = ref.slug || slugify(ref.title) || ref._id || ref.id
                 const refUrl = `/references/${catSlug}/${refSlug}`
 
                 return (

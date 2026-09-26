@@ -16,6 +16,7 @@ import {
 } from 'react-icons/lu'
 import DocumentRenderer, { hasValidContent } from './DocumentRenderer'
 import { formatDate } from '@/lib/utils/format'
+import { slugify } from '@/lib/utils/slugify'
 
 export default function ReferenceViewer({
   activeReference,
@@ -195,7 +196,7 @@ export default function ReferenceViewer({
         {prevRef ? (
           categorySlug ? (
             <Link
-              href={`/references/${categorySlug}/${prevRef.slug || prevRef._id || prevRef.id}`}
+              href={`/references/${categorySlug}/${prevRef.slug || slugify(prevRef.title) || prevRef._id || prevRef.id}`}
               className='flex items-center gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 w-full sm:w-auto text-left group'
             >
               <LuChevronLeft className='w-5 h-5 shrink-0 group-hover:-translate-x-1 transition-transform' />
@@ -231,7 +232,7 @@ export default function ReferenceViewer({
         {nextRef && (
           categorySlug ? (
             <Link
-              href={`/references/${categorySlug}/${nextRef.slug || nextRef._id || nextRef.id}`}
+              href={`/references/${categorySlug}/${nextRef.slug || slugify(nextRef.title) || nextRef._id || nextRef.id}`}
               className='flex items-center justify-end gap-3 p-3.5 rounded-2xl bg-[#131b2e] hover:bg-white hover:text-slate-950 border border-white/10 text-gray-300 transition-all duration-200 w-full sm:w-auto text-right group ml-auto'
             >
               <div className='flex flex-col items-end'>

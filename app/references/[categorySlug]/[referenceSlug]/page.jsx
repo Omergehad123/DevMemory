@@ -4,6 +4,7 @@ import { fetchCategoryBySlug } from '@/lib/api/categories.api'
 import { fetchReferenceBySlug, fetchReferences } from '@/lib/api/references.api'
 import { SITE_URL } from '@/lib/api/config'
 import InteractiveReferenceView from '@/app/components/references/InteractiveReferenceView'
+import { slugify } from '@/lib/utils/slugify'
 
 export async function generateMetadata({ params }) {
   const { categorySlug, referenceSlug } = await params
@@ -27,7 +28,9 @@ export async function generateMetadata({ params }) {
     reference.description ||
     `Learn ${reference.title} in ${catName}. Complete developer reference with Why, What, and How explanations, syntax, and practical examples.`
 
-  const canonicalPath = `/references/${category.slug || categorySlug}/${reference.slug || referenceSlug}`
+  const canonicalCatSlug = category.slug || slugify(category.name) || categorySlug
+  const canonicalRefSlug = reference.slug || slugify(reference.title) || referenceSlug
+  const canonicalPath = `/references/${canonicalCatSlug}/${canonicalRefSlug}`
   const canonicalUrl = `${SITE_URL}${canonicalPath}`
 
   return {
@@ -68,8 +71,8 @@ export default async function ReferenceDetailPage({ params }) {
   }
 
   const catId = category._id || category.id
-  const catSlug = category.slug || categorySlug
-  const refSlug = reference.slug || referenceSlug
+  const catSlug = category.slug || slugify(category.name) || categorySlug
+  const refSlug = reference.slug || slugify(reference.title) || referenceSlug
   const catName = category.name || 'Category'
 
   // Fetch sibling references in this category for sidebar navigation

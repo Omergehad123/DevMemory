@@ -1,6 +1,7 @@
 import { fetchCategories } from '@/lib/api/categories.api'
 import { fetchReferences } from '@/lib/api/references.api'
 import { SITE_URL } from '@/lib/api/config'
+import { slugify } from '@/lib/utils/slugify'
 
 export default async function sitemap() {
   const staticRoutes = [
@@ -31,7 +32,7 @@ export default async function sitemap() {
     const categoryMap = new Map()
     categories.forEach((cat) => {
       const catId = cat._id || cat.id
-      const catSlug = cat.slug || catId
+      const catSlug = cat.slug || slugify(cat.name) || catId
       categoryMap.set(String(catId), catSlug)
       if (cat.name) {
         categoryMap.set(cat.name.toLowerCase(), catSlug)
@@ -40,7 +41,7 @@ export default async function sitemap() {
 
     // Dynamic Category URLs
     const categoryRoutes = categories.map((cat) => {
-      const catSlug = cat.slug || cat._id || cat.id
+      const catSlug = cat.slug || slugify(cat.name) || cat._id || cat.id
       return {
         url: `${SITE_URL}/references/${catSlug}`,
         lastModified: cat.updatedAt ? new Date(cat.updatedAt) : new Date(),
@@ -56,12 +57,12 @@ export default async function sitemap() {
         let catSlug = 'general'
 
         if (typeof rawCat === 'object' && rawCat !== null) {
-          catSlug = rawCat.slug || rawCat._id || rawCat.id || 'general'
+          catSlug = rawCat.slug || slugify(rawCat.name) || rawCat._id || rawCat.id || 'general'
         } else if (rawCat) {
           catSlug = categoryMap.get(String(rawCat)) || rawCat
         }
 
-        const refSlug = ref.slug || ref._id || ref.id
+        const refSlug = ref.slug || slugify(ref.title) || ref._id || ref.id
         if (!refSlug) return null
 
         return {

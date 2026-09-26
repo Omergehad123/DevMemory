@@ -78,6 +78,9 @@ export const metadata = {
     icon: "/logo.png",
     apple: "/logo.png",
   },
+  verification: {
+    google: "5La9xwDe0PGz5q_LevOdeeKZgfWddD3cGNzWXDlfiYI",
+  },
 };
 
 

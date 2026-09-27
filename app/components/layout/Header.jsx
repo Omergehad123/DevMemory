@@ -166,7 +166,7 @@ export default function Header() {
             priority
             className='w-[50px] h-[50px] sm:w-[70px] sm:h-[70px] object-contain'
           />
-          <h1 className='text-(--secondColor) text-xl sm:text-2xl font-bold'>DevMemory</h1>
+          <span className='text-(--secondColor) text-xl sm:text-2xl font-bold'>DevMemory</span>
         </Link>
       </div>
 

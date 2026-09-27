@@ -93,13 +93,17 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        {/* Google tag (gtag.js) */}
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <Header />
+        {children}
+        <Footer />
+
+        {/* Google Analytics / Google tag */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-K027G0YD6R"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="lazyOnload">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -107,11 +111,6 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-K027G0YD6R');
           `}
         </Script>
-      </head>
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <Header />
-        {children}
-        <Footer />
       </body>
     </html>
   );

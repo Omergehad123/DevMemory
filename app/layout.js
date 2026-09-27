@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -18,20 +19,21 @@ import { SITE_URL } from "@/lib/api/config";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "DevMemory — Fast Developer Reference & Cheat Sheets",
+    default: "DevMemory — Developer Memory & Coding References to Learn and Remember",
     template: "%s — DevMemory",
   },
   description:
-    "A developer reference and cheat sheet platform built to help you understand concepts, master syntax rules, and actually remember what you learned.",
+    "DevMemory is your developer memory platform. Understand concepts, explore coding references, and remember what you learned with fast syntax cheat sheets.",
   keywords: [
-    "developer reference",
+    "devmemory",
+    "developer memory",
+    "coding references",
     "programming cheat sheets",
-    "coding documentation",
+    "understand concepts",
+    "remember coding",
     "web development",
     "JavaScript",
     "React",
-    "frontend",
-    "backend",
   ],
   authors: [{ name: "DevMemory Team" }],
   creator: "DevMemory",
@@ -44,9 +46,9 @@ export const metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "DevMemory",
-    title: "DevMemory — Fast Developer Reference & Cheat Sheets",
+    title: "DevMemory — Developer Memory & Coding References to Learn and Remember",
     description:
-      "Understand programming concepts, copy syntax snippets, and master modern development.",
+      "DevMemory is your developer memory platform. Understand concepts, explore coding references, and remember what you learned.",
     images: [
       {
         url: "/logo.png",
@@ -58,9 +60,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevMemory — Fast Developer Reference & Cheat Sheets",
+    title: "DevMemory — Developer Memory & Coding References to Learn and Remember",
     description:
-      "Understand programming concepts, copy syntax snippets, and master modern development.",
+      "DevMemory is your developer memory platform. Understand concepts, explore coding references, and remember what you learned.",
     images: ["/logo.png"],
   },
   robots: {
@@ -91,6 +93,21 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-K027G0YD6R"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-K027G0YD6R');
+          `}
+        </Script>
+      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <Header />
         {children}

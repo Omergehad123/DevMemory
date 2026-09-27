@@ -52,7 +52,7 @@ function Hero() {
                     variants={itemVariants}
                     className='text-[#777] text-lg sm:text-xl md:text-2xl font-normal max-w-2xl leading-relaxed'
                 >
-                    A developer reference built to help you understand concepts, practice them, and actually remember what you learned.
+                    A developer reference built to help you understand concepts, and remember what you learned.
                 </motion.p>
 
                 {/* CTA Buttons */}

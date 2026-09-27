@@ -7,19 +7,19 @@ import { BookOpen, Code2, Brain, ArrowRight } from 'lucide-react'
 const features = [
     {
         icon: BookOpen,
-        title: 'Learn',
-        description: 'Understand concepts through simple explanations.',
+        title: 'Understand Concepts',
+        description: 'Understand programming concepts clearly with fast, simple explanations.',
     },
     {
         icon: Code2,
-        title: 'Practice',
+        title: 'Practice & Apply',
         description:
-            'Use what you learned with real examples and small challenges.',
+            'Use what you learned with real code examples and syntax references.',
     },
     {
         icon: Brain,
-        title: 'Remember',
-        description: 'Come back to concepts before you forget them.',
+        title: 'Remember It',
+        description: 'Keep syntax in your developer memory before you forget it.',
     },
 ]
 

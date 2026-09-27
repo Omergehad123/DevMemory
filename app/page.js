@@ -6,16 +6,16 @@ import CTA from "./components/CTA";
 import { SITE_URL } from "@/lib/api/config";
 
 export const metadata = {
-  title: "DevMemory — Fast Developer Reference & Cheat Sheets",
+  title: "DevMemory — Developer Memory & Coding References to Learn and Remember",
   description:
-    "A developer reference built to help you understand concepts, practice them, and actually remember what you learned. Explore syntax rules, hooks, and tech stacks.",
+    "DevMemory is your developer memory platform. Understand concepts, explore coding references, and remember what you learned with quick syntax and cheat sheets.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "DevMemory — Fast Developer Reference & Cheat Sheets",
+    title: "DevMemory — Developer Memory & Coding References to Learn and Remember",
     description:
-      "A developer reference built to help you understand concepts, practice them, and actually remember what you learned.",
+      "DevMemory is your developer memory platform. Understand concepts, explore coding references, and remember what you learned.",
     url: SITE_URL,
     type: "website",
   },
@@ -28,7 +28,7 @@ export default function Home() {
     name: "DevMemory",
     url: SITE_URL,
     description:
-      "A developer reference built to help you understand concepts, practice them, and actually remember what you learned.",
+      "DevMemory is your developer memory platform. Understand concepts, explore coding references, and remember what you learned.",
     potentialAction: {
       "@type": "SearchAction",
       target: {

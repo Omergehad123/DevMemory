@@ -130,16 +130,16 @@ export default async function CategoryPage({ params }) {
   }
 
   return (
-    <div className='w-full min-h-[calc(100vh-80px)] bg-(--bgColor) text-gray-100 flex flex-col py-10 px-4 sm:px-8 md:px-16'>
+    <div className='w-full min-h-[calc(100vh-80px)] bg-(--bgColor) text-gray-100 flex flex-col py-6 sm:py-10 px-4 sm:px-8 md:px-16'>
       {/* Schema.org Structured Data */}
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <div className='max-w-6xl w-full mx-auto flex flex-col gap-8'>
+      <div className='max-w-6xl w-full mx-auto flex flex-col gap-6 sm:gap-8'>
         {/* Breadcrumb Bar */}
-        <nav aria-label='Breadcrumb' className='flex items-center gap-2 text-xs font-mono text-gray-400'>
+        <nav aria-label='Breadcrumb' className='flex items-center gap-2 text-xs font-mono text-gray-400 flex-wrap'>
           <Link href='/' className='hover:text-white transition-colors'>
             Home
           </Link>
@@ -148,13 +148,13 @@ export default async function CategoryPage({ params }) {
             References
           </Link>
           <span>&gt;</span>
-          <span className='text-(--secondColor) font-bold'>{catName}</span>
+          <span className='text-(--secondColor) font-bold truncate max-w-[200px]'>{catName}</span>
         </nav>
 
         {/* Category Banner Header */}
-        <div className='p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[#131b2e] to-[#0b101c] border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl'>
-          <div className='flex items-start gap-5'>
-            <div className='w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-3 shrink-0 shadow-inner overflow-hidden'>
+        <div className='p-5 sm:p-8 md:p-10 rounded-3xl bg-gradient-to-br from-[#131b2e] to-[#0b101c] border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl'>
+          <div className='flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 w-full md:w-auto'>
+            <div className='w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2.5 sm:p-3 shrink-0 shadow-inner overflow-hidden'>
               {category.image ? (
                 <img
                   src={category.image}
@@ -162,11 +162,11 @@ export default async function CategoryPage({ params }) {
                   className='w-full h-full object-contain'
                 />
               ) : (
-                <IoCodeSlashOutline className='w-9 h-9 text-(--secondColor)' />
+                <IoCodeSlashOutline className='w-8 h-8 sm:w-9 sm:h-9 text-(--secondColor)' />
               )}
             </div>
 
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 min-w-0 flex-1'>
               <div className='flex items-center gap-2.5 flex-wrap'>
                 <span className='px-3 py-1 rounded-full text-xs font-mono font-semibold bg-(--secondColor)/15 text-(--secondColor) border border-(--secondColor)/30'>
                   {catStack}
@@ -175,11 +175,11 @@ export default async function CategoryPage({ params }) {
                   {references.length} {references.length === 1 ? 'topic' : 'topics'}
                 </span>
               </div>
-              <h1 className='text-3xl sm:text-4xl font-extrabold text-white tracking-tight'>
+              <h1 className='text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight break-words'>
                 {catName} References
               </h1>
               {catDescription && (
-                <p className='text-gray-300 text-sm sm:text-base max-w-2xl leading-relaxed'>
+                <p className='text-gray-300 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed break-words'>
                   {catDescription}
                 </p>
               )}
@@ -188,7 +188,7 @@ export default async function CategoryPage({ params }) {
 
           <Link
             href='/references'
-            className='inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 transition-colors shrink-0'
+            className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 transition-colors w-full sm:w-auto shrink-0'
           >
             <IoArrowBack className='text-sm' />
             <span>All Categories</span>
@@ -197,9 +197,9 @@ export default async function CategoryPage({ params }) {
 
         {/* References List / Grid */}
         <div>
-          <div className='flex items-center justify-between pb-4 mb-6 border-b border-white/10'>
-            <h2 className='text-lg sm:text-xl font-bold text-white flex items-center gap-2'>
-              <IoLayersOutline className='text-(--secondColor)' />
+          <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-6 border-b border-white/10'>
+            <h2 className='text-base sm:text-xl font-bold text-white flex items-center gap-2'>
+              <IoLayersOutline className='text-(--secondColor) shrink-0' />
               <span>Available Topics & Syntax Guides</span>
             </h2>
             <span className='text-xs font-mono text-gray-400'>

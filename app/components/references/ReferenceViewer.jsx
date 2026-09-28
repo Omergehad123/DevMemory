@@ -64,30 +64,30 @@ export default function ReferenceViewer({
   const categoryHref = categorySlug ? `/references/${categorySlug}` : '/references'
 
   return (
-    <div className='flex flex-col gap-8 w-full animate-in fade-in duration-300 text-left'>
+    <div className='flex flex-col gap-6 sm:gap-8 w-full animate-in fade-in duration-300 text-left'>
       {/* Breadcrumb and Category Meta */}
-      <div className='w-full flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/10'>
-        <div className='flex items-center gap-2 text-xs font-mono text-gray-400'>
+      <div className='w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10'>
+        <div className='flex items-center gap-1.5 sm:gap-2 text-xs font-mono text-gray-400 flex-wrap min-w-0'>
           <Link
             href='/references'
-            className='hover:text-(--secondColor) transition-colors'
+            className='hover:text-(--secondColor) transition-colors shrink-0'
           >
             References
           </Link>
           <span>/</span>
           <Link
             href={categoryHref}
-            className='text-(--secondColor) font-semibold hover:underline transition-all'
+            className='text-(--secondColor) font-semibold hover:underline transition-all truncate max-w-[140px] sm:max-w-none'
           >
             {categoryName}
           </Link>
           <span>/</span>
-          <span className='text-gray-200 font-medium truncate max-w-[200px] sm:max-w-xs'>
+          <span className='text-gray-200 font-medium truncate max-w-[150px] sm:max-w-xs'>
             {activeReference.title}
           </span>
         </div>
 
-        <div className='flex items-center gap-3 text-xs text-gray-400'>
+        <div className='flex items-center gap-3 text-xs text-gray-400 shrink-0'>
           {activeReference.updatedAt && (
             <div className='flex items-center gap-1.5'>
               <IoCalendarOutline className='text-xs text-(--hoverColor)' />
@@ -101,20 +101,20 @@ export default function ReferenceViewer({
       </div>
 
       {/* Reference Header Title & Description */}
-      <div className='w-full flex flex-col gap-3'>
-        <h1 className='text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight'>
+      <div className='w-full flex flex-col gap-2 sm:gap-3'>
+        <h1 className='text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight break-words'>
           {activeReference.title}
         </h1>
         {activeReference.description && (
-          <p className='text-gray-300 text-sm sm:text-base leading-relaxed'>
+          <p className='text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed break-words'>
             {activeReference.description}
           </p>
         )}
       </div>
 
       {/* 3 Content Navigation Tabs: Why / What / How */}
-      <div className='w-full flex items-center justify-between flex-wrap gap-4 pt-1'>
-        <div className='flex items-center gap-1.5 p-1.5 rounded-2xl bg-[#0b0f19] border border-white/10 shadow-inner max-w-full overflow-x-auto'>
+      <div className='w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1'>
+        <div className='flex items-center gap-1.5 p-1.5 rounded-2xl bg-[#0b0f19] border border-white/10 shadow-inner w-full sm:w-auto overflow-x-auto'>
           {tabs.map((tab) => {
             const Icon = tab.icon
             const isActive = activeContentTab === tab.id
@@ -123,7 +123,7 @@ export default function ReferenceViewer({
               <button
                 key={tab.id}
                 onClick={() => setActiveContentTab(tab.id)}
-                className={`relative flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer select-none ${
+                className={`relative flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer select-none ${
                   isActive
                     ? 'text-white font-bold'
                     : 'text-gray-400 hover:text-gray-200 hover:bg-white/5'
@@ -155,7 +155,7 @@ export default function ReferenceViewer({
           })}
         </div>
 
-        <div className='flex items-center gap-2 text-xs text-gray-400 font-mono'>
+        <div className='hidden sm:flex items-center gap-2 text-xs text-gray-400 font-mono'>
           <span className='px-3 py-1 rounded-full bg-white/5 border border-white/10'>
             Section: <strong className='text-(--secondColor) uppercase'>{activeContentTab}</strong>
           </span>
@@ -163,7 +163,7 @@ export default function ReferenceViewer({
       </div>
 
       {/* Document Content Container */}
-      <div className='w-full max-w-7xl bg-[#111827] border border-white/10 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl shadow-black/40 min-h-[300px]'>
+      <div className='w-full max-w-7xl bg-[#111827] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-8 md:p-10 shadow-2xl shadow-black/40 min-h-[300px]'>
         <AnimatePresence mode='wait'>
           <motion.div
             key={`${activeRefKey}-${activeContentTab}`}

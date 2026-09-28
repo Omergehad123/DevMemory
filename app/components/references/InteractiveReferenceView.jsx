@@ -70,20 +70,20 @@ export default function InteractiveReferenceView({
   return (
     <div className='w-full min-h-[calc(100vh-80px)] bg-(--bgColor) text-gray-100 flex flex-col'>
       {/* Mobile Top Header / Breadcrumb Bar */}
-      <div className='md:hidden bg-[#131b2e] border-b border-white/10 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-md'>
-        <div className='flex items-center gap-2'>
+      <div className='md:hidden bg-[#131b2e] border-b border-white/10 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-md gap-2'>
+        <div className='flex items-center gap-2 min-w-0'>
           <button
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className='p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors'
+            className='p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors shrink-0'
             aria-label='Toggle topics menu'
           >
             <IoMenu className='text-lg' />
           </button>
-          <div className='flex flex-col truncate'>
-            <span className='text-[10px] uppercase font-mono text-(--secondColor) font-bold'>
+          <div className='flex flex-col min-w-0 truncate'>
+            <span className='text-[10px] uppercase font-mono text-(--secondColor) font-bold truncate'>
               {categoryName}
             </span>
-            <span className='text-xs font-semibold text-white truncate max-w-[200px]'>
+            <span className='text-xs font-semibold text-white truncate max-w-[180px]'>
               {activeReference ? activeReference.title : 'Topic'}
             </span>
           </div>
@@ -91,7 +91,7 @@ export default function InteractiveReferenceView({
 
         <Link
           href={`/references/${catSlug}`}
-          className='flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-white px-2 py-1.5 rounded-lg bg-white/5'
+          className='flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-white px-2 py-1.5 rounded-lg bg-white/5 shrink-0'
         >
           <IoArrowBack className='text-xs' />
           <span>Hub</span>

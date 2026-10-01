@@ -12,8 +12,11 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
+  }
+
+  /* Preserve list markers for document content */
+  ul, ol {
+    list-style: revert;
   }
 
   body {

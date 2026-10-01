@@ -180,12 +180,11 @@ export default function Header() {
               : pathname.startsWith(link.href)
 
             return (
-              <li key={link.href}>
+              <li key={link.href} className='list-none'>
                 <Link
                   href={link.href}
-                  className={`font-bold transition-colors duration-200 ${
-                    isActive ? 'text-(--secondColor)' : 'text-(--bgColor) hover:text-(--secondColor)'
-                  }`}
+                  className={`font-bold transition-colors duration-200 ${isActive ? 'text-(--secondColor)' : 'text-(--bgColor) hover:text-(--secondColor)'
+                    }`}
                 >
                   {link.name}
                 </Link>

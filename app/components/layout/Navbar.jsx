@@ -20,16 +20,14 @@ function Navbar({ isOpen, onClose }) {
             {/* Overlay Backdrop */}
             <div
                 onClick={onClose}
-                className={`fixed inset-0 bg-black/50 backdrop-blur-xs z-40 transition-opacity duration-300 md:hidden ${
-                    isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                }`}
+                className={`fixed inset-0 bg-black/50 backdrop-blur-xs z-40 transition-opacity duration-300 md:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                    }`}
             />
 
             {/* Sidebar from Left */}
             <aside
-                className={`fixed top-0 left-0 z-50 h-full w-[250px] bg-(--mainColor) shadow-2xl flex flex-col justify-between p-5 transition-transform duration-300 ease-in-out md:hidden ${
-                    isOpen ? 'translate-x-0' : '-translate-x-full'
-                }`}
+                className={`fixed top-0 left-0 z-50 h-full w-[250px] bg-(--mainColor) shadow-2xl flex flex-col justify-between p-5 transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                    }`}
             >
                 <div>
                     {/* Sidebar Header with Brand & Close Button */}
@@ -57,15 +55,14 @@ function Navbar({ isOpen, onClose }) {
                                     : pathname.startsWith(link.href)
 
                                 return (
-                                    <li key={link.href}>
+                                    <li key={link.href} className='list-none'>
                                         <Link
                                             href={link.href}
                                             onClick={onClose}
-                                            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-bold transition-all duration-200 ${
-                                                isActive
+                                            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-bold transition-all duration-200 ${isActive
                                                     ? 'text-(--secondColor) bg-indigo-50/60'
                                                     : 'text-(--bgColor) hover:text-(--secondColor) hover:bg-gray-50'
-                                            }`}
+                                                }`}
                                         >
                                             {Icon && <Icon className='text-xl' />}
                                             <span>{link.name}</span>

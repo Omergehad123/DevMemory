@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { HiArrowRight } from 'react-icons/hi2'
-import { IoCodeSlashOutline, IoCalendarOutline } from 'react-icons/io5'
+import { IoCodeSlashOutline, IoCalendarOutline, IoTimeOutline } from 'react-icons/io5'
 import { fetchReferences } from '@/lib/api/references.api'
 import { formatDate } from '@/lib/utils/format'
 import SoonPlaceholder from './ui/SoonPlaceholder'
@@ -41,7 +41,7 @@ export default function LatestReferences() {
     let isMounted = true
     async function loadLatest() {
       try {
-        const data = await fetchReferences({ limit: 3, sortBy: 'updated-desc' })
+        const data = await fetchReferences({ limit: 3, sortBy: 'created-desc' })
         if (isMounted) {
           setReferences(data?.references || [])
         }
@@ -186,16 +186,24 @@ export default function LatestReferences() {
                       )}
 
                       {/* Bottom: Date & Link */}
-                      <div className='pt-4 border-t border-white/5 flex items-center justify-between'>
-                        {ref.updatedAt && (
-                          <div className='flex items-center gap-1.5 text-gray-500 text-[11px] font-mono'>
-                            <IoCalendarOutline className='text-xs text-(--hoverColor)' />
-                            <span>{formatDate(ref.updatedAt)}</span>
-                          </div>
-                        )}
+                      <div className='pt-4 border-t border-white/5 flex items-center justify-between gap-2'>
+                        <div className='flex flex-col gap-0.5 text-gray-500 text-[11px] font-mono'>
+                          {ref.createdAt && (
+                            <div className='flex items-center gap-1.5 text-gray-400'>
+                              <IoCalendarOutline className='text-xs text-gray-400' />
+                              <span>Created {formatDate(ref.createdAt)}</span>
+                            </div>
+                          )}
+                          {ref.updatedAt && (
+                            <div className='flex items-center gap-1.5 text-gray-500'>
+                              <IoTimeOutline className='text-xs text-(--hoverColor)' />
+                              <span>Updated {formatDate(ref.updatedAt)}</span>
+                            </div>
+                          )}
+                        </div>
                         <Link
                           href={targetUrl}
-                          className='inline-flex items-center gap-1.5 text-gray-300 group-hover:text-(--secondColor) font-mono text-xs font-semibold transition-colors duration-200 ml-auto'
+                          className='inline-flex items-center gap-1.5 text-gray-300 group-hover:text-(--secondColor) font-mono text-xs font-semibold transition-colors duration-200 ml-auto shrink-0'
                         >
                           <span>View Reference</span>
                           <HiArrowRight className='w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1' />

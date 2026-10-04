@@ -9,6 +9,7 @@ import {
   IoCodeSlashOutline,
   IoRocketOutline,
   IoInformationCircleOutline,
+  IoTimeOutline,
 } from 'react-icons/io5'
 import {
   LuChevronLeft,
@@ -87,10 +88,16 @@ export default function ReferenceViewer({
           </span>
         </div>
 
-        <div className='flex items-center gap-3 text-xs text-gray-400 shrink-0'>
+        <div className='flex items-center gap-3 text-xs text-gray-400 shrink-0 flex-wrap'>
+          {activeReference.createdAt && (
+            <div className='flex items-center gap-1.5 font-mono text-[11px] text-gray-400'>
+              <IoCalendarOutline className='text-xs text-gray-400' />
+              <span>Created {formatDate(activeReference.createdAt)}</span>
+            </div>
+          )}
           {activeReference.updatedAt && (
-            <div className='flex items-center gap-1.5'>
-              <IoCalendarOutline className='text-xs text-(--hoverColor)' />
+            <div className='flex items-center gap-1.5 font-mono text-[11px] text-gray-400'>
+              <IoTimeOutline className='text-xs text-(--hoverColor)' />
               <span>Updated {formatDate(activeReference.updatedAt)}</span>
             </div>
           )}

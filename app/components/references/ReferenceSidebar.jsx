@@ -156,6 +156,14 @@ export default function ReferenceSidebar({
                 }
               `
 
+              const originalIdx = references.findIndex(
+                (r) => (r._id || r.id) === refId || (r.slug && r.slug === ref.slug)
+              )
+              const itemNumber =
+                originalIdx !== -1
+                  ? references.length - originalIdx
+                  : filteredReferences.length - idx
+
               const innerContent = (
                 <>
                   {sidebarCollapsed ? (
@@ -169,7 +177,7 @@ export default function ReferenceSidebar({
                         }
                       `}
                     >
-                      {idx + 1}
+                      {itemNumber}
                     </span>
                   ) : (
                     <div className='flex items-center gap-2.5 w-full overflow-hidden'>
@@ -183,7 +191,7 @@ export default function ReferenceSidebar({
                           }
                         `}
                       >
-                        {idx + 1}
+                        {itemNumber}
                       </span>
                       <span className='text-xs sm:text-sm truncate leading-snug'>
                         {ref.title}

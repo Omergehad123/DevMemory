@@ -79,7 +79,7 @@ export default async function ReferenceDetailPage({ params }) {
   let references = []
   try {
     const refsData = await fetchReferences(
-      { categoryId: catId, limit: 100 },
+      { categoryId: catId, limit: 100, sortBy: 'created-desc' },
       { next: { revalidate: 60 } }
     )
     references = refsData?.references || []

@@ -7,7 +7,8 @@ import {
   IoDocumentTextOutline, 
   IoCalendarOutline,
   IoCodeSlashOutline,
-  IoFolderOpenOutline
+  IoFolderOpenOutline,
+  IoTimeOutline
 } from 'react-icons/io5'
 import { HiArrowRight } from 'react-icons/hi2'
 import { fetchCategoryBySlug } from '@/lib/api/categories.api'
@@ -76,7 +77,7 @@ export default async function CategoryPage({ params }) {
   let references = []
   try {
     const refsData = await fetchReferences(
-      { categoryId: catId, limit: 100 },
+      { categoryId: catId, limit: 100, sortBy: 'created-desc' },
       { next: { revalidate: 60 } }
     )
     references = refsData?.references || []
@@ -220,17 +221,25 @@ export default async function CategoryPage({ params }) {
                     className='group relative flex flex-col justify-between p-6 rounded-2xl bg-[#111827] border border-white/10 hover:border-(--secondColor)/60 hover:shadow-xl hover:shadow-(--secondColor)/10 hover:-translate-y-1 transition-all duration-200'
                   >
                     <div>
-                      {/* Topic Number & Icon */}
-                      <div className='flex items-center justify-between mb-3 text-xs'>
-                        <span className='w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-mono font-bold text-gray-300 group-hover:bg-(--secondColor) group-hover:text-white transition-colors'>
-                          {idx + 1}
+                      {/* Topic Number & Dates */}
+                      <div className='flex items-start justify-between mb-3 text-xs gap-2'>
+                        <span className='w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-mono font-bold text-gray-300 group-hover:bg-(--secondColor) group-hover:text-white transition-colors shrink-0'>
+                          {references.length - idx}
                         </span>
-                        {ref.updatedAt && (
-                          <div className='flex items-center gap-1 text-[11px] font-mono text-gray-500'>
-                            <IoCalendarOutline className='text-xs' />
-                            <span>{formatDate(ref.updatedAt)}</span>
-                          </div>
-                        )}
+                        <div className='flex flex-col items-end gap-0.5 text-[11px] font-mono'>
+                          {ref.createdAt && (
+                            <div className='flex items-center gap-1 text-gray-400'>
+                              <IoCalendarOutline className='text-xs text-gray-400' />
+                              <span>Created: {formatDate(ref.createdAt)}</span>
+                            </div>
+                          )}
+                          {ref.updatedAt && (
+                            <div className='flex items-center gap-1 text-gray-500'>
+                              <IoTimeOutline className='text-xs text-gray-500' />
+                              <span>Updated: {formatDate(ref.updatedAt)}</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
 
                       {/* Topic Title */}

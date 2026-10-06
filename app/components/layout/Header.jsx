@@ -8,6 +8,7 @@ import { IoSearch, IoMenu, IoClose } from 'react-icons/io5'
 import Navbar from './Navbar'
 import HeaderSearchModal from './HeaderSearchModal'
 import { searchAll } from '@/lib/api/search.api'
+import { trackSearch } from '@/lib/gtag'
 
 const navLinks = [
   { name: 'Home', href: '/', exact: true },
@@ -35,6 +36,7 @@ function HeaderSearchInput() {
         const data = await searchAll(trimmed, { limit: 4 })
         if (isSubscribed) {
           setResults(data)
+          trackSearch(trimmed)
         }
       } catch (err) {
         if (isSubscribed) {
@@ -82,7 +84,9 @@ function HeaderSearchInput() {
 
   const handleSearchSubmit = (e) => {
     if (e.key === 'Enter' && searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+      const term = searchQuery.trim()
+      trackSearch(term)
+      router.push(`/search?q=${encodeURIComponent(term)}`)
       setIsOpen(false)
     }
   }

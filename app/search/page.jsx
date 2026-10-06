@@ -9,6 +9,7 @@ import {
   IoSparklesOutline
 } from 'react-icons/io5'
 import { searchAll } from '@/lib/api/search.api'
+import { trackSearch } from '@/lib/gtag'
 import SearchResultCard from '@/app/components/ui/SearchResultCard'
 
 function SearchContent({ initialQuery = '' }) {
@@ -31,6 +32,7 @@ function SearchContent({ initialQuery = '' }) {
         if (isMounted) {
           setResults(data)
           setHasSearched(true)
+          trackSearch(trimmed)
         }
       } catch (err) {
         if (isMounted) {
